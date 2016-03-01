@@ -1,0 +1,104 @@
+﻿<Page
+    x:Class="DevsDNA.Drone.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DevsDNA.Drone.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <!--DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"-->
+    
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Image Source="/Assets/DNA Helix.png" Grid.RowSpan="2" Opacity="0.15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"/>
+
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Margin="0,24"
+                   Text="Quadcopter Raspberry PI2" FontSize="42" FontWeight="Bold"
+                   TextAlignment="Center"/>
+        <Image Source="/Assets/rpi2logo.png" Stretch="Uniform" Height="90" Margin="12,0" HorizontalAlignment="Right"/>
+        <Image Source="/Assets/FullLogo.png" Stretch="Uniform" Height="70" Margin="24,0" HorizontalAlignment="Left"/>
+
+        <Grid Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="48">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".1*"/>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width=".4*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--Thrust-->
+            <TextBlock Text="Thrust" FontSize="32" FontWeight="Bold" TextAlignment="Center"/>
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <Slider x:Name="sldThrust" Height="640"  VerticalAlignment="Stretch" HorizontalAlignment="Center"
+                    Orientation="Vertical" Minimum="0" StepFrequency="0.1" Maximum="1"  ValueChanged="sldThrust_ValueChanged"></Slider>
+                <Button Visibility="Collapsed" Content="Calibrate" VerticalAlignment="Bottom" HorizontalAlignment="Center" Tapped="Button_Tapped"></Button>
+                <Button Visibility="Collapsed" Content="STOP" VerticalAlignment="Bottom" HorizontalAlignment="Center" Tapped="Button_Tapped_1"></Button>
+            </StackPanel>
+            
+
+            <!--Gyro-->
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Gyro X" FontSize="32" FontWeight="Bold"/>
+                    <TextBlock Width="150" x:Name="txtGyroX" FontSize="32"/>
+                </StackPanel>
+                <StackPanel Margin="24,0,0,0">
+                    <TextBlock Text="Gyro Y" FontSize="32" FontWeight="Bold"/>
+                    <TextBlock Width="150" x:Name="txtGyroY" FontSize="32"/>
+                </StackPanel>
+            </StackPanel>
+            <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+                <Canvas Width="600" Height="600">
+                    <Image Source="/Assets/DroneBase.png" Stretch="Uniform"/>
+                    <Canvas.Projection>
+                        <PlaneProjection x:Name="planeProjection" CenterOfRotationX=".5"
+                                     CenterOfRotationY=".5"
+                                     CenterOfRotationZ=".5"/>
+                    </Canvas.Projection>
+                </Canvas>
+            </Viewbox>
+
+            <!--Forces-->
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center">
+                <StackPanel Margin="24,0,0,0">
+                    <TextBlock Text="Roll force" FontSize="32" FontWeight="Bold"/>
+                    <TextBlock Width="150" x:Name="txtRollValue" FontSize="32"/>
+                </StackPanel>
+                <StackPanel Margin="24,0,0,0">
+                    <TextBlock Text="Pitch force" FontSize="32" FontWeight="Bold"/>
+                    <TextBlock Width="150" x:Name="txtPitchValue" FontSize="32"/>
+                </StackPanel>
+            </StackPanel>
+            <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform" Margin="150,100,150,200">
+                <Grid Width="720" Height="720" Background="DarkGray">
+                    <Rectangle Width="6" Fill="Wheat" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+                    <Rectangle Height="6" Fill="Wheat" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <Ellipse Width="50" Height="50" Fill="SteelBlue">
+                        <Ellipse.RenderTransform>
+                            <TranslateTransform x:Name="CenterTransform"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Width="50" Height="50" Fill="Red">
+                        <Ellipse.RenderTransform>
+                            <TranslateTransform x:Name="ForceTransform"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Width="50" Height="50" Fill="Green">
+                        <Ellipse.RenderTransform>
+                            <TranslateTransform x:Name="GyroTransform"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                </Grid>
+            </Viewbox>
+        </Grid>
+    </Grid>
+</Page>
